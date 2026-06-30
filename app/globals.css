@@ -1,0 +1,24 @@
+:root{
+  --bg: #000000;
+  --text: #ffffff;
+  --accent: #ff8a00;
+}
+html,body,#root{height:100%;}
+body{
+  margin:0;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.app-root{display:flex;min-height:100vh}
+.sidebar{width:220px;padding:24px;background:linear-gradient(180deg,#070707, #0a0a0a);border-right:1px solid rgba(255,255,255,0.03)}
+.brand{font-weight:700;color:var(--accent);margin-bottom:16px;font-size:18px}
+.sidebar nav ul{list-style:none;padding:0;margin:0}
+.sidebar nav li{margin:10px 0}
+.sidebar nav a{color:var(--text);text-decoration:none;opacity:0.9}
+.sidebar nav a:hover{color:var(--accent)}
+.main{flex:1;padding:28px}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:18px;border-radius:8px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.muted{color:rgba(255,255,255,0.6)}
+.accent{color:var(--accent)}
