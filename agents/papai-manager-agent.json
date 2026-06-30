@@ -1,0 +1,7 @@
+{
+  "id": "papai-manager-agent",
+  "name": "Papai Manager Agent",
+  "mission": "Create weekly restaurant dashboard summaries and recommended actions for management.",
+  "inputs": ["reservations", "content_posts", "candidates", "reviews"],
+  "outputs": ["weekly_report", "alerts", "recommended_actions"]
+}
