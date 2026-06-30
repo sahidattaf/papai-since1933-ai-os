@@ -1,0 +1,7 @@
+{
+  "id": "papai-review-agent",
+  "name": "Papai Review Agent",
+  "mission": "Generate review requests, route feedback, and summarize reputation signals.",
+  "inputs": ["customer_context", "feedback"],
+  "outputs": ["review_request", "private_feedback_reply", "weekly_summary"]
+}
