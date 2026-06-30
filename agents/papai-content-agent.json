@@ -1,0 +1,7 @@
+{
+  "id": "papai-content-agent",
+  "name": "Papai Content Agent",
+  "mission": "Create Instagram posts, reels scripts, story copy, daily specials, and weekly content calendars.",
+  "inputs": ["content_calendar", "restaurant_profile"],
+  "outputs": ["caption", "post_idea", "reels_script", "weekly_plan"]
+}
