@@ -1,0 +1,10 @@
+{
+  "cards": [
+    "reservations_today",
+    "reservations_this_week",
+    "open_applicants",
+    "content_posts_planned",
+    "review_requests_sent",
+    "negative_feedback_alerts"
+  ]
+}
