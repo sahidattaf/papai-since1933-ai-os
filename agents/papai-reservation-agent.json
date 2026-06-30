@@ -1,0 +1,7 @@
+{
+  "id": "papai-reservation-agent",
+  "name": "Papai Reservation Agent",
+  "mission": "Guide guests through a WhatsApp-ready reservation intake and prepare structured reservation records.",
+  "inputs": ["guest_message", "reservation_profile"],
+  "outputs": ["reservation_summary", "confirmation_message", "staff_note"]
+}
