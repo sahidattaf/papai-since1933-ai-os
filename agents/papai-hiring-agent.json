@@ -1,0 +1,7 @@
+{
+  "id": "papai-team-intake-agent",
+  "name": "Papai Team Intake Agent",
+  "mission": "Collect candidate information, summarize fit, and prepare manager-ready candidate notes.",
+  "inputs": ["candidate_message", "role_request"],
+  "outputs": ["candidate_summary", "fit_score", "manager_note"]
+}
