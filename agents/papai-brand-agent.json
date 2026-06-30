@@ -1,0 +1,7 @@
+{
+  "id": "papai-brand-agent",
+  "name": "Papai Brand Agent",
+  "mission": "Maintain Papai's brand voice, visual direction, captions, bio, and customer-facing tone.",
+  "inputs": ["restaurant_profile", "content_request"],
+  "outputs": ["brand_guidance", "caption", "bio_update", "visual_notes"]
+}
