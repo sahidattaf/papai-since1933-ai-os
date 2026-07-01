@@ -78,6 +78,23 @@ Notes:
 - The app includes a Supabase-ready client (`lib/supabase.ts`) but does not require real API keys to run locally. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env.local` to enable live DB features.
 - The UI uses a simple black background with white text and a warm orange accent color defined in `app/globals.css`.
 
+## Supabase optional setup
+
+The app is designed to work without any real Supabase credentials.
+
+Required env vars when you want to enable live persistence:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
+
+When those values are present, the shared persistence layer in `lib/persistence.ts` will use Supabase create/read operations for reservations, reviews, content posts, and applicants.
+
+When they are missing, the app automatically falls back to `localStorage`, so local development and demos continue to work without requiring any external services.
+
+The fallback behavior is intentionally documented in the code comments inside `lib/persistence.ts` and `lib/supabase.ts` so the app can be enabled later without changing the UI flow.
+
 ## Strategy
 
 This repo is designed as a standalone Papai client implementation and as a reusable Hospitality OS demo for Curaçao restaurants.

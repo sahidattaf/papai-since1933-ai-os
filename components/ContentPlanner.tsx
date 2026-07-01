@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
+import { loadContentPlanner, saveContentPlanner } from '../lib/persistence';
 
 export type DayItem = {
   day: string;
@@ -10,30 +11,19 @@ export type DayItem = {
 
 export function ContentPlanner({ initial }: { initial: Record<string, string> }) {
   const [items, setItems] = useState<DayItem[] | null>(null);
-  const storageKey = 'papai:content-planner';
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(storageKey);
-      if (raw) {
-        setItems(JSON.parse(raw));
-        return;
-      }
-    } catch (e) {}
+    async function bootstrap() {
+      const loaded = await loadContentPlanner(initial);
+      setItems(loaded);
+    }
 
-    // initialize from initial prop
-    const initialItems: DayItem[] = Object.keys(initial).map(day => ({
-      day,
-      theme: initial[day],
-      caption: '',
-      status: 'Draft',
-    }));
-    setItems(initialItems);
+    bootstrap();
   }, [initial]);
 
   useEffect(() => {
     if (!items) return;
-    try { localStorage.setItem(storageKey, JSON.stringify(items)); } catch (e) {}
+    void saveContentPlanner(items);
   }, [items]);
 
   function updateItem(day: string, patch: Partial<DayItem>) {

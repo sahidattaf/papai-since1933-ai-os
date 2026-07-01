@@ -3,18 +3,29 @@ import React, { useEffect, useState } from 'react';
 import { TeamForm, type Applicant } from '../../components/TeamForm';
 import { TeamTable } from '../../components/TeamTable';
 import rolesData from '../../data/hiring-roles.json';
+import { clearApplicants, loadApplicants, saveApplicant } from '../../lib/persistence';
 
 export default function TeamIntakePage() {
   const [applicants, setApplicants] = useState<Applicant[]>([]);
 
   useEffect(() => {
-    try { const raw = localStorage.getItem('papai:applicants'); if (raw) setApplicants(JSON.parse(raw)); } catch (e) {}
+    async function bootstrap() {
+      const loaded = await loadApplicants();
+      setApplicants(loaded);
+    }
+
+    bootstrap();
   }, []);
 
-  useEffect(() => { try { localStorage.setItem('papai:applicants', JSON.stringify(applicants)); } catch (e) {} }, [applicants]);
+  async function addApplicant(a: Applicant) {
+    const next = await saveApplicant(a);
+    setApplicants(next);
+  }
 
-  function addApplicant(a: Applicant) { setApplicants(prev => [a, ...prev]); }
-  function clearAll() { setApplicants([]); }
+  async function clearAll() {
+    await clearApplicants();
+    setApplicants([]);
+  }
 
   return (
     <div>

@@ -2,31 +2,27 @@
 import React, { useEffect, useState } from 'react';
 import { ReservationForm, type Reservation } from '../../components/ReservationForm';
 import { ReservationTable } from '../../components/ReservationTable';
+import { clearReservations, loadReservations, saveReservation } from '../../lib/persistence';
 
 export default function ReservationsPage() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem('papai:reservations');
-      if (raw) setReservations(JSON.parse(raw));
-    } catch (e) {
-      // ignore
+    async function bootstrap() {
+      const loaded = await loadReservations();
+      setReservations(loaded);
     }
+
+    bootstrap();
   }, []);
 
-  useEffect(() => {
-    try {
-      localStorage.setItem('papai:reservations', JSON.stringify(reservations));
-    } catch (e) {}
-  }, [reservations]);
-
-  function addReservation(r: Reservation) {
-    setReservations(prev => [r, ...prev]);
-    // Supabase integration: keep ready in `lib/supabase.ts` if needed later.
+  async function addReservation(r: Reservation) {
+    const next = await saveReservation(r);
+    setReservations(next);
   }
 
-  function clearAll() {
+  async function clearAll() {
+    await clearReservations();
     setReservations([]);
   }
 

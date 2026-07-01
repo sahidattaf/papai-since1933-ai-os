@@ -2,34 +2,36 @@
 import React, { useEffect, useState } from 'react';
 import { ReviewForm, type Review } from '../../components/ReviewForm';
 import { ReviewTable } from '../../components/ReviewTable';
+import { clearReviews, loadReviews, saveReview } from '../../lib/persistence';
 
 export default function ReviewsPage() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem('papai:reviews');
-      if (raw) setReviews(JSON.parse(raw));
-    } catch (e) {}
+    async function bootstrap() {
+      const loaded = await loadReviews();
+      setReviews(loaded);
+    }
+
+    bootstrap();
   }, []);
 
-  useEffect(() => {
-    try { localStorage.setItem('papai:reviews', JSON.stringify(reviews)); } catch (e) {}
-  }, [reviews]);
-
-  function addReview(r: Review) {
-    setReviews(prev => [r, ...prev]);
+  async function addReview(r: Review) {
+    const next = await saveReview(r);
+    setReviews(next);
     if (r.rating >= 4) {
       setMessage('Great rating — send a public review request (e.g., link to Google/Instagram).');
     } else {
       setMessage('Low rating — initiate a private manager follow-up to resolve the issue.');
     }
-    // clear message after a short while
     setTimeout(() => setMessage(null), 8000);
   }
 
-  function clearAll() { setReviews([]); }
+  async function clearAll() {
+    await clearReviews();
+    setReviews([]);
+  }
 
   return (
     <div>
