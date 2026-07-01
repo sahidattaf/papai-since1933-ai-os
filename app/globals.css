@@ -22,3 +22,6 @@ body{
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
 .muted{color:rgba(255,255,255,0.6)}
 .accent{color:var(--accent)}
+
+.input{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:8px;border-radius:6px}
+textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:8px;border-radius:6px}

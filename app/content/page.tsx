@@ -1,4 +1,4 @@
-import { ContentCalendar } from '../../components/ContentCalendar';
+import { ContentPlanner } from '../../components/ContentPlanner';
 import calendar from '../../data/content-calendar.json';
 
 export default function ContentPage() {
@@ -9,18 +9,10 @@ export default function ContentPage() {
         <p className="muted">Instagram posts, daily specials, reels ideas, and weekly rhythm.</p>
       </section>
 
-      <section className="card">
-        <h2>Weekly Rhythm</h2>
-        <ul>
-          {Object.entries(calendar).map(([day, theme]) => (
-            <li key={day}><strong>{day}:</strong> <span className="muted">{theme}</span></li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="card">
-        <ContentCalendar />
-        <p className="muted">Empty state: schedule a post to populate the planner.</p>
+      <section>
+        {/* pass the JSON rhythm into the client planner component */}
+        {/* @ts-ignore */}
+        <ContentPlanner initial={calendar} />
       </section>
     </div>
   );
