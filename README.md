@@ -95,6 +95,27 @@ When they are missing, the app automatically falls back to `localStorage`, so lo
 
 The fallback behavior is intentionally documented in the code comments inside `lib/persistence.ts` and `lib/supabase.ts` so the app can be enabled later without changing the UI flow.
 
+## Deployment (Vercel)
+
+Deploy the Papai AI OS dashboard to Vercel in minutes — no real Supabase credentials required.
+
+### Quick Start
+
+```bash
+npm i -g vercel
+vercel
+```
+
+Or connect via GitHub for automatic deployments on every push.
+
+**See full Deployment Guide:** [docs/deployment.md](docs/deployment.md)
+
+Key features:
+- **Zero-config deployment:** Works with `npm run build` and `npm start`
+- **LocalStorage fallback:** All data persists locally if Supabase credentials are missing
+- **Optional Supabase:** Add env vars to enable server-side persistence later
+- **Continuous deployment:** Every push to `main` auto-deploys to Vercel
+
 ## Strategy
 
 This repo is designed as a standalone Papai client implementation and as a reusable Hospitality OS demo for Curaçao restaurants.
