@@ -6,7 +6,8 @@ export function ReviewTable({ items, onClear }: { items: Review[]; onClear?: () 
   if (!items || items.length === 0) {
     return (
       <div className="card">
-        <h2 className="accent">Reviews & Feedback</h2>
+        <div className="pill">Feedback loop</div>
+        <h2 className="accent" style={{ marginTop: 8, marginBottom: 6 }}>Reviews & feedback</h2>
         <p className="muted">No feedback yet. Ask guests for reviews to start tracking sentiment.</p>
       </div>
     );
@@ -14,26 +15,27 @@ export function ReviewTable({ items, onClear }: { items: Review[]; onClear?: () 
 
   return (
     <div className="card">
-      <h2 className="accent">Reviews & Feedback</h2>
-      <div style={{overflowX:'auto'}}>
-        <table style={{width:'100%',borderCollapse:'collapse'}}>
+      <div className="pill">Feedback loop</div>
+      <h2 className="accent" style={{ marginTop: 8, marginBottom: 6 }}>Reviews & feedback</h2>
+      <div className="table-wrap">
+        <table className="data-table">
           <thead>
-            <tr className="muted">
-              <th style={{textAlign:'left',padding:8}}>Name</th>
-              <th style={{textAlign:'left',padding:8}}>Phone</th>
-              <th style={{textAlign:'left',padding:8}}>Visit</th>
-              <th style={{textAlign:'left',padding:8}}>Rating</th>
-              <th style={{textAlign:'left',padding:8}}>Feedback</th>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Visit</th>
+              <th>Rating</th>
+              <th>Feedback</th>
             </tr>
           </thead>
           <tbody>
             {items.map((r) => (
-              <tr key={r.id} style={{borderTop:'1px solid rgba(255,255,255,0.03)'}}>
-                <td style={{padding:8}}>{r.customerName}</td>
-                <td style={{padding:8}}>{r.phone}</td>
-                <td style={{padding:8}}>{r.visitDate}</td>
-                <td style={{padding:8}}>{r.rating}</td>
-                <td style={{padding:8}} className="muted">{r.feedback || '—'}</td>
+              <tr key={r.id}>
+                <td>{r.customerName}</td>
+                <td>{r.phone}</td>
+                <td>{r.visitDate}</td>
+                <td>{r.rating}</td>
+                <td className="muted">{r.feedback || '—'}</td>
               </tr>
             ))}
           </tbody>
@@ -42,7 +44,7 @@ export function ReviewTable({ items, onClear }: { items: Review[]; onClear?: () 
 
       {onClear && (
         <div style={{marginTop:12}}>
-          <button onClick={onClear} style={{background:'transparent',border:'1px solid rgba(255,255,255,0.06)',color:'var(--accent)',padding:'6px 10px',borderRadius:6}}>Clear all</button>
+          <button onClick={onClear} className="button button--secondary">Clear all</button>
         </div>
       )}
     </div>

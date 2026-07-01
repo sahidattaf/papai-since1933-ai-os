@@ -61,25 +61,27 @@ export function ReservationForm({ onAdd }: { onAdd: (r: Reservation) => void }) 
 
   return (
     <form onSubmit={handleSubmit} className="card">
-      <h2 className="accent">New Reservation</h2>
+      <div className="pill">Reservation intake</div>
+      <h2 className="accent" style={{ marginTop: 8, marginBottom: 6 }}>New reservation</h2>
+      <p className="muted" style={{ marginTop: 0 }}>Capture guest details clearly for a polished front-of-house experience.</p>
 
       {errors.length > 0 && (
-        <div style={{color: 'var(--accent)', marginBottom: 8}}>
+        <div className="error-list">
           {errors.map((e, i) => (
             <div key={i}>{e}</div>
           ))}
         </div>
       )}
 
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
+      <div className="form-grid">
         <label>
           <div className="muted">Customer name</div>
-          <input value={customerName} onChange={e=>setCustomerName(e.target.value)} className="input" />
+          <input value={customerName} onChange={e=>setCustomerName(e.target.value)} className="input" placeholder="Alicia Rivera" />
         </label>
 
         <label>
           <div className="muted">Phone</div>
-          <input value={phone} onChange={e=>setPhone(e.target.value)} className="input" />
+          <input value={phone} onChange={e=>setPhone(e.target.value)} className="input" placeholder="+5999 123 4567" />
         </label>
 
         <label>
@@ -97,14 +99,14 @@ export function ReservationForm({ onAdd }: { onAdd: (r: Reservation) => void }) 
           <input type="number" min={1} value={String(guestCount)} onChange={e=>setGuestCount(Number(e.target.value))} className="input" />
         </label>
 
-        <label>
+        <label className="full">
           <div className="muted">Special request</div>
-          <input value={specialRequest} onChange={e=>setSpecialRequest(e.target.value)} className="input" />
+          <input value={specialRequest} onChange={e=>setSpecialRequest(e.target.value)} className="input" placeholder="Window seat, birthday, vegan menu" />
         </label>
       </div>
 
-      <div style={{marginTop:12}}>
-        <button type="submit" style={{background:'var(--accent)',border:'none',color:'black',padding:'8px 12px',borderRadius:6}}>Create reservation</button>
+      <div style={{marginTop:14}}>
+        <button type="submit" className="button button--primary">Create reservation</button>
       </div>
     </form>
   );

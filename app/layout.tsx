@@ -11,7 +11,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <div className="app-root">
           <aside className="sidebar">
-            <div className="brand">Papai Since 1933</div>
+            <div>
+              <div className="brand">Papai Since 1933<span>AI OS Command Center</span></div>
+            </div>
             <nav>
               <ul>
                 <li><Link href="/dashboard">Dashboard</Link></li>
@@ -23,7 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </ul>
             </nav>
           </aside>
-          <main className="main">{children}</main>
+          <main className="main">
+            <div className="page-inner">{children}</div>
+          </main>
         </div>
       </body>
     </html>

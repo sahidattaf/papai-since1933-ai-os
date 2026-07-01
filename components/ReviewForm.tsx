@@ -55,25 +55,27 @@ export function ReviewForm({ onAdd }: { onAdd: (r: Review) => void }) {
 
   return (
     <form onSubmit={handleSubmit} className="card">
-      <h2 className="accent">Request a Review</h2>
+      <div className="pill">Review capture</div>
+      <h2 className="accent" style={{ marginTop: 8, marginBottom: 6 }}>Request a review</h2>
+      <p className="muted" style={{ marginTop: 0 }}>Turn guest moments into thoughtful follow-up and stronger reputation signals.</p>
 
       {errors.length > 0 && (
-        <div style={{color: 'var(--accent)', marginBottom: 8}}>
+        <div className="error-list">
           {errors.map((e, i) => (
             <div key={i}>{e}</div>
           ))}
         </div>
       )}
 
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
+      <div className="form-grid">
         <label>
           <div className="muted">Customer name</div>
-          <input value={customerName} onChange={e=>setCustomerName(e.target.value)} className="input" />
+          <input value={customerName} onChange={e=>setCustomerName(e.target.value)} className="input" placeholder="Maria de Vries" />
         </label>
 
         <label>
           <div className="muted">Phone</div>
-          <input value={phone} onChange={e=>setPhone(e.target.value)} className="input" />
+          <input value={phone} onChange={e=>setPhone(e.target.value)} className="input" placeholder="+5999 765 4321" />
         </label>
 
         <label>
@@ -92,14 +94,14 @@ export function ReviewForm({ onAdd }: { onAdd: (r: Review) => void }) {
           </select>
         </label>
 
-        <label style={{gridColumn:'1 / -1'}}>
+        <label className="full">
           <div className="muted">Feedback</div>
-          <textarea value={feedback} onChange={e=>setFeedback(e.target.value)} rows={3} style={{width:'100%'}} />
+          <textarea value={feedback} onChange={e=>setFeedback(e.target.value)} rows={3} placeholder="What stood out during the visit?" />
         </label>
       </div>
 
-      <div style={{marginTop:12}}>
-        <button type="submit" style={{background:'var(--accent)',border:'none',color:'black',padding:'8px 12px',borderRadius:6}}>Save review</button>
+      <div style={{marginTop:14}}>
+        <button type="submit" className="button button--primary">Save review</button>
       </div>
     </form>
   );
