@@ -1,10 +1,29 @@
 import { createClient } from "@supabase/supabase-js";
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
-const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+const rawAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
-export const hasSupabaseConfig = Boolean(url && anonKey);
+function isValidSupabaseUrl(value: string) {
+  try {
+    const parsed = new URL(value);
+    return parsed.protocol === 'https:' || parsed.protocol === 'http:';
+  } catch {
+    return false;
+  }
+}
 
-export const supabase = hasSupabaseConfig
-  ? createClient(url, anonKey)
-  : null;
+function createSupabaseClient(url: string, anonKey: string) {
+  try {
+    return createClient(url, anonKey);
+  } catch {
+    return null;
+  }
+}
+
+const supabaseClient =
+  isValidSupabaseUrl(rawUrl) && rawAnonKey.trim().length > 0
+    ? createSupabaseClient(rawUrl, rawAnonKey)
+    : null;
+
+export const hasSupabaseConfig = Boolean(supabaseClient);
+export const supabase = supabaseClient;

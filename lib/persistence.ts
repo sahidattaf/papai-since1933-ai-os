@@ -84,19 +84,25 @@ function clearStorage(key: string) {
 async function loadFromSupabase<T>(table: string, mapper: (row: any) => T): Promise<T[]> {
   if (!hasSupabaseConfig || !supabase) return [];
 
-  const { data, error } = await supabase.from(table).select('*').order('created_at', { ascending: false });
-  if (error || !data) return [];
-
-  return data.map(mapper);
+  try {
+    const { data, error } = await supabase.from(table).select('*').order('created_at', { ascending: false });
+    if (error || !data) return [];
+    return data.map(mapper);
+  } catch {
+    return [];
+  }
 }
 
 async function saveToSupabase<T>(table: string, payload: Record<string, unknown>): Promise<T | null> {
   if (!hasSupabaseConfig || !supabase) return null;
 
-  const { data, error } = await supabase.from(table).insert(payload).select().single();
-  if (error || !data) return null;
-
-  return data as T;
+  try {
+    const { data, error } = await supabase.from(table).insert(payload).select().single();
+    if (error || !data) return null;
+    return data as T;
+  } catch {
+    return null;
+  }
 }
 
 function mapReservation(row: any): ReservationRecord {
@@ -181,8 +187,12 @@ export async function clearReservations() {
 }
 
 export async function loadReviews(): Promise<ReviewRecord[]> {
-  const fromSupabase = await loadFromSupabase('customer_feedback', mapReview);
-  if (fromSupabase.length > 0) return fromSupabase;
+  try {
+    const fromSupabase = await loadFromSupabase('customer_feedback', mapReview);
+    if (fromSupabase.length > 0) return fromSupabase;
+  } catch {
+    // Fall back to local storage if Supabase is misconfigured or offline.
+  }
 
   return readStorage<ReviewRecord[]>(STORAGE_KEYS.reviews, []);
 }
@@ -190,17 +200,22 @@ export async function loadReviews(): Promise<ReviewRecord[]> {
 export async function saveReview(input: ReviewRecord): Promise<ReviewRecord[]> {
   const next = [input, ...(await loadReviews())];
 
-  const supabaseRecord = await saveToSupabase<any>('customer_feedback', {
-    customer_name: input.customerName,
-    phone: input.phone,
-    feedback: input.feedback,
-    rating: input.rating,
-    status: 'open',
-  });
+  try {
+    const supabaseRecord = await saveToSupabase<any>('customer_feedback', {
+      customer_name: input.customerName,
+      phone: input.phone,
+      feedback: input.feedback,
+      rating: input.rating,
+      status: 'open',
+    });
 
-  if (supabaseRecord) {
-    writeStorage(STORAGE_KEYS.reviews, [mapReview(supabaseRecord), ...next.filter(item => item.id !== supabaseRecord.id)]);
-    return [mapReview(supabaseRecord), ...next.filter(item => item.id !== supabaseRecord.id)];
+    if (supabaseRecord) {
+      const updated = [mapReview(supabaseRecord), ...next.filter(item => item.id !== supabaseRecord.id)];
+      writeStorage(STORAGE_KEYS.reviews, updated);
+      return updated;
+    }
+  } catch {
+    // If Supabase throws, continue using localStorage.
   }
 
   writeStorage(STORAGE_KEYS.reviews, next);
